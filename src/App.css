@@ -314,13 +314,27 @@
 .buy{
   background: #4f6bf1;
   color: #ffffff;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 4px; 
+  margin-inline: 10px;
 }
 
 .buy-done{
   background-color: green;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 4px; 
+  margin-inline: 10px;
 }
+
+.delete{
+  background-color: red;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 4px; 
+  margin-inline: 10px;
+}
+
 
 .item-done{
   font-weight: bold;
