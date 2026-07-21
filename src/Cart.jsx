@@ -1,117 +1,208 @@
-import { useState } from 'react';
-
-
 const Cart = () => {
+    return (
+        <div className="products-container">
+            {/* Sidebar */}
+            <div className="sidebar">
+                <div className="sidebar-section">
+                    <h3>Search</h3>
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search products..."
+                    />
+                </div>
 
-    return <>
+                <div className="sidebar-section">
+                    <h3>Categories</h3>
+                    <ul className="category-list">
+                        <li className="active">All Products</li>
+                        <li>Electronics</li>
+                        <li>Sports</li>
+                        <li>Home</li>
+                        <li>Accessories</li>
+                    </ul>
+                </div>
+            </div>
 
-        <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <h5 className="my-0 mr-md-auto font-weight-normal">Company name</h5>
-        <nav className="my-2 my-md-0 mr-md-3">
-            <a className="p-2 text-dark" href="#">Features</a>
-            <a className="p-2 text-dark" href="#">Enterprise</a>
-            <a className="p-2 text-dark" href="#">Support</a>
-            <a className="p-2 text-dark" href="#">Pricing</a>
-        </nav>
-        <a className="btn btn-outline-primary" href="#">Sign up</a>
+            {/* Main Content */}
+            <div className="products-main">
+                <div className="products-header">
+                    <div>
+                        <h1>Our Products</h1>
+                        <p>Showing 8 products</p>
+                    </div>
+                    <button className="cart-button">
+                        <span className="cart-icon">🛒</span>
+                        <span className="cart-text">Cart</span>
+                        <span className="cart-count">0</span>
+                    </button>
+                </div>
+
+                <div className="products-grid">
+                    {/* Product Card 1 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/3498db/ffffff?text=Headphones" alt="Wireless Headphones" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Electronics</p>
+                            <h3 className="product-name">Wireless Headphones</h3>
+                            <div className="product-tags">
+                                <span className="tag">Bluetooth</span>
+                                <span className="tag">Noise Cancelling</span>
+                            </div>
+                            <p className="product-description">High-quality wireless headphones with noise cancellation</p>
+                            <div className="product-footer">
+                                <span className="product-price">$79.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 2 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/e74c3c/ffffff?text=Smart+Watch" alt="Smart Watch" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Electronics</p>
+                            <h3 className="product-name">Smart Watch</h3>
+                            <div className="product-tags">
+                                <span className="tag">Fitness</span>
+                                <span className="tag">GPS</span>
+                            </div>
+                            <p className="product-description">Feature-rich smartwatch with fitness tracking</p>
+                            <div className="product-footer">
+                                <span className="product-price">$199.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 3 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/2ecc71/ffffff?text=Running+Shoes" alt="Running Shoes" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Sports</p>
+                            <h3 className="product-name">Running Shoes</h3>
+                            <div className="product-tags">
+                                <span className="tag">Comfort</span>
+                                <span className="tag">Breathable</span>
+                            </div>
+                            <p className="product-description">Comfortable running shoes for daily training</p>
+                            <div className="product-footer">
+                                <span className="product-price">$89.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 4 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/9b59b6/ffffff?text=Yoga+Mat" alt="Yoga Mat" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Sports</p>
+                            <h3 className="product-name">Yoga Mat</h3>
+                            <div className="product-tags">
+                                <span className="tag">Non-slip</span>
+                                <span className="tag">Eco-friendly</span>
+                            </div>
+                            <p className="product-description">Non-slip yoga mat for all types of exercises</p>
+                            <div className="product-footer">
+                                <span className="product-price">$29.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 5 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/f39c12/ffffff?text=Coffee+Maker" alt="Coffee Maker" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Home</p>
+                            <h3 className="product-name">Coffee Maker</h3>
+                            <div className="product-tags">
+                                <span className="tag">Programmable</span>
+                                <span className="tag">12 Cup</span>
+                            </div>
+                            <p className="product-description">Programmable coffee maker with thermal carafe</p>
+                            <div className="product-footer">
+                                <span className="product-price">$59.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 6 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/1abc9c/ffffff?text=Blender" alt="Blender" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Home</p>
+                            <h3 className="product-name">Blender</h3>
+                            <div className="product-tags">
+                                <span className="tag">Powerful</span>
+                                <span className="tag">Multi-speed</span>
+                            </div>
+                            <p className="product-description">Powerful blender for smoothies and more</p>
+                            <div className="product-footer">
+                                <span className="product-price">$49.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 7 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/34495e/ffffff?text=Backpack" alt="Backpack" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Accessories</p>
+                            <h3 className="product-name">Backpack</h3>
+                            <div className="product-tags">
+                                <span className="tag">Durable</span>
+                                <span className="tag">Laptop</span>
+                            </div>
+                            <p className="product-description">Durable backpack with laptop compartment</p>
+                            <div className="product-footer">
+                                <span className="product-price">$45.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Product Card 8 */}
+                    <div className="product-card">
+                        <div className="product-image">
+                            <img src="https://via.placeholder.com/300x200/e67e22/ffffff?text=Sunglasses" alt="Sunglasses" />
+                        </div>
+                        <div className="product-details">
+                            <p className="product-category">Accessories</p>
+                            <h3 className="product-name">Sunglasses</h3>
+                            <div className="product-tags">
+                                <span className="tag">UV Protection</span>
+                                <span className="tag">Polarized</span>
+                            </div>
+                            <p className="product-description">Stylish sunglasses with UV protection</p>
+                            <div className="product-footer">
+                                <span className="product-price">$39.99</span>
+                                <button className="btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 className="display-4">Pricing</h1>
-        <p className="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
-        </div>
-
-        <div className="container">
-        <div className="card-deck mb-3 text-center">
-            <div className="card mb-4 box-shadow">
-            <div className="card-header">
-                <h4 className="my-0 font-weight-normal">Free</h4>
-            </div>
-            <div className="card-body">
-                <h1 className="card-title pricing-card-title">$0 <small className="text-muted">/ mo</small></h1>
-                <ul className="list-unstyled mt-3 mb-4">
-                <li>10 users included</li>
-                <li>2 GB of storage</li>
-                <li>Email support</li>
-                <li>Help center access</li>
-                </ul>
-                <button type="button" className="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-            </div>
-            </div>
-            <div className="card mb-4 box-shadow">
-            <div className="card-header">
-                <h4 className="my-0 font-weight-normal">Pro</h4>
-            </div>
-            <div className="card-body">
-                <h1 className="card-title pricing-card-title">$15 <small className="text-muted">/ mo</small></h1>
-                <ul className="list-unstyled mt-3 mb-4">
-                <li>20 users included</li>
-                <li>10 GB of storage</li>
-                <li>Priority email support</li>
-                <li>Help center access</li>
-                </ul>
-                <button type="button" className="btn btn-lg btn-block btn-primary">Get started</button>
-            </div>
-            </div>
-            <div className="card mb-4 box-shadow">
-            <div className="card-header">
-                <h4 className="my-0 font-weight-normal">Enterprise</h4>
-            </div>
-            <div className="card-body">
-                <h1 className="card-title pricing-card-title">$29 <small className="text-muted">/ mo</small></h1>
-                <ul className="list-unstyled mt-3 mb-4">
-                <li>30 users included</li>
-                <li>15 GB of storage</li>
-                <li>Phone and email support</li>
-                <li>Help center access</li>
-                </ul>
-                <button type="button" className="btn btn-lg btn-block btn-primary">Contact us</button>
-            </div>
-            </div>
-        </div>
-
-        <footer className="pt-4 my-md-5 pt-md-5 border-top">
-            <div className="row">
-            <div className="col-12 col-md">
-                <img className="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24" />
-                <small className="d-block mb-3 text-muted">&copy; 2017-2018</small>
-            </div>
-            <div className="col-6 col-md">
-                <h5>Features</h5>
-                <ul className="list-unstyled text-small">
-                <li><a className="text-muted" href="#">Cool stuff</a></li>
-                <li><a className="text-muted" href="#">Random feature</a></li>
-                <li><a className="text-muted" href="#">Team feature</a></li>
-                <li><a className="text-muted" href="#">Stuff for developers</a></li>
-                <li><a className="text-muted" href="#">Another one</a></li>
-                <li><a className="text-muted" href="#">Last time</a></li>
-                </ul>
-            </div>
-            <div className="col-6 col-md">
-                <h5>Resources</h5>
-                <ul className="list-unstyled text-small">
-                <li><a className="text-muted" href="#">Resource</a></li>
-                <li><a className="text-muted" href="#">Resource name</a></li>
-                <li><a className="text-muted" href="#">Another resource</a></li>
-                <li><a className="text-muted" href="#">Final resource</a></li>
-                </ul>
-            </div>
-            <div className="col-6 col-md">
-                <h5>About</h5>
-                <ul className="list-unstyled text-small">
-                <li><a className="text-muted" href="#">Team</a></li>
-                <li><a className="text-muted" href="#">Locations</a></li>
-                <li><a className="text-muted" href="#">Privacy</a></li>
-                <li><a className="text-muted" href="#">Terms</a></li>
-                </ul>
-            </div>
-            </div>
-        </footer>
-        </div>
-    
-    </>
-}
-
+    );
+};
 
 export default Cart;
 

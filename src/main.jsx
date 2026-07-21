@@ -8,10 +8,10 @@ import Cart from './Cart.jsx'
 import BasicCart from './components/BasicCart.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <>
     {/* <App /> */}
-    {/* <Cart /> */}
-    <BasicCart />
+    <Cart />
+    {/* <BasicCart /> */}
 
-  </StrictMode>,
+  </>
 )
