@@ -590,6 +590,50 @@
   transform: scale(0.98);
 }
 
+/* Bottom Pagination */
+.products-pagination {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-btn {
+  border: 1px solid #d8e0f5;
+  background: #ffffff;
+  color: #2c3e50;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  border-color: #4f6bf1;
+  color: #4f6bf1;
+}
+
+.pagination-btn.active {
+  background: #4f6bf1;
+  border-color: #4f6bf1;
+  color: #ffffff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* No Products Message */
 .no-products {
   grid-column: 1 / -1;

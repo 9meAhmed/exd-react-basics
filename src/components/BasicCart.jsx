@@ -14,17 +14,17 @@ export default function BasicCart() {
         return (current.price * current.quantity) + subTotal;
     }, 0);
 
-    const addToCart = ({id, name, price}) => {
+    const addToCart = ({id, title, price}) => {
 
         if(isCartEmpty){
-            const newCartItem = { id, name, price, quantity: 1 };
+            const newCartItem = { id, title, price, quantity: 1 };
             setCartItems([...cartItems, newCartItem]);
         }else{
             const foundCartItem = findCartProductById(id);
             if(foundCartItem){
                 increaseQuantity(id)
             }else{
-                const newCartItem = { id, name, price, quantity: 1 };
+                const newCartItem = { id, title, price, quantity: 1 };
                 setCartItems([...cartItems, newCartItem]);
             }
         }
@@ -72,9 +72,9 @@ export default function BasicCart() {
     }
 
     const fetchProducts = useCallback((searchTerm) => {
-        console.log("Searching products with term:", searchTerm);
+        // console.log("Searching products with term:", searchTerm);
         // Simulate fetching products from an API
-        console.log("Fetching products...");
+        // console.log("Fetching products...");
 
         let url= 'https://dummyjson.com/products/';
 
@@ -83,7 +83,6 @@ export default function BasicCart() {
         }
 
         fetch(url).then(response => response.json()).then(data => {
-            console.log(data);
             setProducts(data.products);
         }).catch(error => {
             console.error("Error fetching products:", error);

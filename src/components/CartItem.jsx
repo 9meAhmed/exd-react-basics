@@ -2,7 +2,7 @@ import { memo } from "react";
 
 const CartItem = ({item, increaseQuantity, decreaseQuantity, removeCartItem, symbol}) => {
 
-    console.log("CartItem rendered", item.name);
+    console.log("CartItem rendered", item.title);
 
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center">

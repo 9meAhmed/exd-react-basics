@@ -1,4 +1,59 @@
+import React, { useState, useEffect } from "react";
+
 const Cart = () => {
+
+    const limit = 12;
+
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [products, setProducts] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedcategory] = useState(null);
+    const [pageNo, setPageNo] = useState(1);
+    const [totalProductsCount, setTotalProductsCount] = useState(0);
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const fetchProducts = async () => {
+        try {
+
+            const skip = 0;
+
+            let url = "https://dummyjson.com/products";
+
+            if (selectedCategory) {
+                url = `https://dummyjson.com/products/category/${selectedCategory.slug}`;
+            }
+
+
+            url += `?limit=${limit}&skip=${ (pageNo - 1) * limit}`;
+
+            const response = await fetch(url)
+            const data = await response.json()
+            setProducts(data.products);
+            setTotalProductsCount(data.total);
+
+        } catch (error) {
+            console.log('Error fetching data')
+        }
+    }
+
+    async function fetchCategories() {
+        const response = await fetch("https://dummyjson.com/products/categories")
+        const data = await response.json()
+        console.log(data)
+        setCategories(data)
+    }
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    useEffect(() => {
+        fetchProducts();
+    }, [selectedCategory, pageNo]);
+
     return (
         <div className="products-container">
             {/* Sidebar */}
@@ -15,11 +70,18 @@ const Cart = () => {
                 <div className="sidebar-section">
                     <h3>Categories</h3>
                     <ul className="category-list">
-                        <li className="active">All Products</li>
-                        <li>Electronics</li>
-                        <li>Sports</li>
-                        <li>Home</li>
-                        <li>Accessories</li>
+                        <li className={`category-item ${selectedCategory === null ? "active" : ""}`} onClick={() => setSelectedcategory(null)} >All Categories
+                        </li>
+                        {categories.map((category, index) => {
+                            return (
+                                <li key={index} className={`category-item ${selectedCategory === category ? "active" : ""}`}
+                                    onClick={() => {
+                                        setPageNo(1);
+                                        setSelectedcategory(category);
+
+                                    }} >{category.name}</li>
+                            );
+                        })}
                     </ul>
                 </div>
             </div>
@@ -31,7 +93,7 @@ const Cart = () => {
                         <h1>Our Products</h1>
                         <p>Showing 8 products</p>
                     </div>
-                    <button className="cart-button">
+                    <button className="cart-button" onClick={toggleModal}>
                         <span className="cart-icon">🛒</span>
                         <span className="cart-text">Cart</span>
                         <span className="cart-count">0</span>
@@ -40,163 +102,83 @@ const Cart = () => {
 
                 <div className="products-grid">
                     {/* Product Card 1 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/3498db/ffffff?text=Headphones" alt="Wireless Headphones" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Electronics</p>
-                            <h3 className="product-name">Wireless Headphones</h3>
-                            <div className="product-tags">
-                                <span className="tag">Bluetooth</span>
-                                <span className="tag">Noise Cancelling</span>
+                    {products.map((itm) => {
+                        return (
+                            <div className="product-card " key={itm.id}>
+
+                                <div className="product-image">
+                                    <img src={itm.thumbnail} alt={itm.title} />
+                                </div>
+                                <div className="product-details">
+                                    <p className="product-category">{itm.category}</p>
+                                    <h3 className="product-name">{itm.title}</h3>
+                                    <div className="product-tags">
+                                        {itm.tags.map((tag, index) => {
+                                            return (
+
+                                                <span key={index} className="tag">{tag}</span>
+                                            )
+                                        })}
+                                    </div>
+                                    <p className="product-description">{itm.description}</p>
+                                    <div className="product-footer">
+                                        <span className="product-price">${itm.price}</span>
+                                        <button className="btn-add-to-cart">Add to Cart</button>
+                                    </div>
+                                </div>
+
                             </div>
-                            <p className="product-description">High-quality wireless headphones with noise cancellation</p>
-                            <div className="product-footer">
-                                <span className="product-price">$79.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
+                        )
+                    })}
+
+
+                </div>  
+
+                {totalProductsCount > limit && (
+
+                <div className="products-pagination" aria-label="Products pagination">
+                    <button type="button" className="pagination-btn" disabled>
+                        Previous
+                    </button>
+
+                    <div className="pagination-pages">
+
+                        {Array.from({ length: Math.ceil(totalProductsCount / limit) }, (_, index) => {
+                            const page = index + 1;
+                            return (
+                                <button
+                                    key={page}
+                                    type="button"
+                                    className={`pagination-btn ${page === pageNo ? "active" : ""}`}
+                                    onClick={() => setPageNo(page)}
+                                >
+                                    {page}
+                                </button>
+                            );
+                        })}
                     </div>
 
-                    {/* Product Card 2 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/e74c3c/ffffff?text=Smart+Watch" alt="Smart Watch" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Electronics</p>
-                            <h3 className="product-name">Smart Watch</h3>
-                            <div className="product-tags">
-                                <span className="tag">Fitness</span>
-                                <span className="tag">GPS</span>
-                            </div>
-                            <p className="product-description">Feature-rich smartwatch with fitness tracking</p>
-                            <div className="product-footer">
-                                <span className="product-price">$199.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" className="pagination-btn">
+                        Next
+                    </button>
+                </div>)}
+            </div>
 
-                    {/* Product Card 3 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/2ecc71/ffffff?text=Running+Shoes" alt="Running Shoes" />
+            <div className="modal" tabIndex="-1" role="dialog" style={{ display: isModalOpen ? 'block' : 'none' }}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Modal title</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {
+                                toggleModal()
+                            }}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div className="product-details">
-                            <p className="product-category">Sports</p>
-                            <h3 className="product-name">Running Shoes</h3>
-                            <div className="product-tags">
-                                <span className="tag">Comfort</span>
-                                <span className="tag">Breathable</span>
-                            </div>
-                            <p className="product-description">Comfortable running shoes for daily training</p>
-                            <div className="product-footer">
-                                <span className="product-price">$89.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
+                        <div className="modal-body">
+                            <p>Modal body text goes here.</p>
                         </div>
-                    </div>
 
-                    {/* Product Card 4 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/9b59b6/ffffff?text=Yoga+Mat" alt="Yoga Mat" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Sports</p>
-                            <h3 className="product-name">Yoga Mat</h3>
-                            <div className="product-tags">
-                                <span className="tag">Non-slip</span>
-                                <span className="tag">Eco-friendly</span>
-                            </div>
-                            <p className="product-description">Non-slip yoga mat for all types of exercises</p>
-                            <div className="product-footer">
-                                <span className="product-price">$29.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Product Card 5 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/f39c12/ffffff?text=Coffee+Maker" alt="Coffee Maker" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Home</p>
-                            <h3 className="product-name">Coffee Maker</h3>
-                            <div className="product-tags">
-                                <span className="tag">Programmable</span>
-                                <span className="tag">12 Cup</span>
-                            </div>
-                            <p className="product-description">Programmable coffee maker with thermal carafe</p>
-                            <div className="product-footer">
-                                <span className="product-price">$59.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Product Card 6 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/1abc9c/ffffff?text=Blender" alt="Blender" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Home</p>
-                            <h3 className="product-name">Blender</h3>
-                            <div className="product-tags">
-                                <span className="tag">Powerful</span>
-                                <span className="tag">Multi-speed</span>
-                            </div>
-                            <p className="product-description">Powerful blender for smoothies and more</p>
-                            <div className="product-footer">
-                                <span className="product-price">$49.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Product Card 7 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/34495e/ffffff?text=Backpack" alt="Backpack" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Accessories</p>
-                            <h3 className="product-name">Backpack</h3>
-                            <div className="product-tags">
-                                <span className="tag">Durable</span>
-                                <span className="tag">Laptop</span>
-                            </div>
-                            <p className="product-description">Durable backpack with laptop compartment</p>
-                            <div className="product-footer">
-                                <span className="product-price">$45.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Product Card 8 */}
-                    <div className="product-card">
-                        <div className="product-image">
-                            <img src="https://via.placeholder.com/300x200/e67e22/ffffff?text=Sunglasses" alt="Sunglasses" />
-                        </div>
-                        <div className="product-details">
-                            <p className="product-category">Accessories</p>
-                            <h3 className="product-name">Sunglasses</h3>
-                            <div className="product-tags">
-                                <span className="tag">UV Protection</span>
-                                <span className="tag">Polarized</span>
-                            </div>
-                            <p className="product-description">Stylish sunglasses with UV protection</p>
-                            <div className="product-footer">
-                                <span className="product-price">$39.99</span>
-                                <button className="btn-add-to-cart">Add to Cart</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
