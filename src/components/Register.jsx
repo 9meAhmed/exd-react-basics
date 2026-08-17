@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useApi } from '../hooks/apiHook';
 
 const signupSchema = z.object({
     name: z.string().nonempty('Name is required'),
@@ -14,6 +15,9 @@ const signupSchema = z.object({
 
 
 function Register() {
+
+    const signupApi = useApi('/auth/signup', 'POST');
+
     const {
         register,
         handleSubmit,
@@ -25,30 +29,17 @@ function Register() {
     const onSubmit = async (data) => {
         console.log('Valid signup data:', data);
 
-        try {
-            const response = await fetch('http://localhost:3000/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...data }),
-            });
+        await signupApi.callEndPoint(data);
 
-            if (!response.ok) {
-                throw new Error(`Server returned status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            console.log('Success:', result);
-
-        } catch (error) {
-            console.error('Submission Error:', error);
+        if (signupApi.error) {
+            console.error('Submission Error:', signupApi.error);
+        } else {
+            console.log('Success:', signupApi.response);
         }
-
     };
 
     return (
-        <>
+        <>  
             <h2 className="h4 text-center mb-4">Register</h2>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="form-group">
