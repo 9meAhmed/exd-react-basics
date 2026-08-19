@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useNavigate } from "react-router";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useApi } from '../hooks/apiHook';
@@ -10,9 +12,11 @@ const loginSchema = z.object({
 
 
 function Login() {
+
+    const navigate = useNavigate();
     
         const loginApi = useApi('/auth/login', 'POST');
-    
+
         const {
             register,
             handleSubmit,
@@ -22,16 +26,22 @@ function Login() {
         });
     
         const onSubmit = async (data) => {
-            console.log('Valid login data:', data);
-    
             await loginApi.callEndPoint(data);
-    
+        };
+
+        useEffect(() => {
             if (loginApi.error) {
                 console.error('Submission Error:', loginApi.error);
-            } else {
-                console.log('Success:', loginApi.response);
             }
-        };
+        }, [loginApi.error]);
+
+        useEffect(() => {
+            if (loginApi.response) {
+                localStorage.setItem('accessToken', loginApi.response.token);
+                localStorage.setItem('refreshToken', loginApi.response.refreshToken);
+                navigate('/home');
+            }
+        }, [loginApi.response, navigate]);
 
     return (
         <>
