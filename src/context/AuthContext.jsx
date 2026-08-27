@@ -1,11 +1,12 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import { useApi } from '../hooks/apiHook';
+import { ENDPOINTS } from '../constants/endpoints';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
-    const { response, error, callEndPoint } = useApi('/auth/user-info', 'GET');
+    const { response, error, callEndPoint } = useApi(ENDPOINTS.USER_INFO, 'GET');
     const [isLoading, setIsLoading] = useState(true);
 
     const user = response?.user ?? null;

@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useApi } from '../hooks/apiHook';
+import { ENDPOINTS } from '../constants/endpoints';
 
 const signupSchema = z.object({
     name: z.string().nonempty('Name is required'),
@@ -16,7 +17,7 @@ const signupSchema = z.object({
 
 function Register() {
 
-    const signupApi = useApi('/auth/signup', 'POST');
+    const signupApi = useApi(ENDPOINTS.SIGNUP, 'POST');
 
     const {
         register,

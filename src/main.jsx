@@ -10,24 +10,34 @@ import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 
+import { Provider } from "react-redux";
+import { store } from "./store.js";
+
 createRoot(document.getElementById('root')).render(
   <>
-    <AuthProvider>
+    <Provider store={store}>
       <BrowserRouter>
-        <Routes>
 
-          <Route path="/" element={<App />} />
-          <Route element={<AuthLayout />}>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-          </Route>
 
-          <Route element={<ProtectedLayout />}>
-            <Route path="/home" element={<App />} />
-          </Route>
+        <AuthProvider>
+          <Routes>
 
-        </Routes>
+            <Route path="/" element={<App />} />
+
+            <Route element={<ProtectedLayout />}>
+              <Route path="/home" element={<App />} />
+            </Route>
+
+            <Route element={<AuthLayout />}>
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+            </Route>
+
+
+
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
-    </AuthProvider>
+    </Provider>
   </>
 )

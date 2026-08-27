@@ -25,17 +25,17 @@ export function useApi(endpoint, method = "GET") {
             });
 
             if (!response.ok) {
-                console.error(`API Error: ${response.status}`);
+                
+                const refreshToken = localStorage.getItem('refreshToken');
 
-                if(response.status === 401) {
-
+                if(response.status === 401 && refreshToken) {
                     const refreshResponse = await fetch(`${BASE_URL}/auth/refresh-token`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            "x-refresh-token": `${localStorage.getItem('refreshToken')}`,
+                            "x-refresh-token": `${refreshToken}`,
                         },
-                        body: JSON.stringify({ refreshToken: localStorage.getItem('refreshToken') }),
+                        body: JSON.stringify({ refreshToken }),
                     });
 
                     if (refreshResponse.ok) {
@@ -45,6 +45,7 @@ export function useApi(endpoint, method = "GET") {
                         return callEndPoint(body, headers);
                     } else {
                         console.error('Refresh token failed:', refreshResponse.status);
+                        localStorage.clear();
                     }
                 }
 
@@ -52,11 +53,9 @@ export function useApi(endpoint, method = "GET") {
             }
 
             const data = await response.json();
-            // console.log('API Response:', data);
-
             setResponse(data);
         } catch (err) {
-            console.error('API Error:', err);
+            // console.error('API Error:', err);
             setError(err);
         }
     };

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useApi } from '../hooks/apiHook';
+import { ENDPOINTS } from '../constants/endpoints';
 
 const loginSchema = z.object({
     email: z.string().email('Invalid email address').nonempty('Email is required'),
@@ -15,7 +16,7 @@ function Login() {
 
     const navigate = useNavigate();
     
-        const loginApi = useApi('/auth/login', 'POST');
+        const loginApi = useApi(ENDPOINTS.LOGIN, 'POST');
 
         const {
             register,
